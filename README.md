@@ -1,5 +1,5 @@
 # 30MAY_JAVASCRIPT
-  1.	JavaScript is a client-side scripting language.
+  	1.	JavaScript is a client-side scripting language.
 	2.	You can declare a variable using let, const, or var.
 	3.	To assign a string to a variable, use quotes like this:
       let name = **"John"**;
