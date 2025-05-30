@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html >
+<head>
+  
+  <title>DOM Traversal Example</title>
+  <style>
+    /* Style for toggled class */
+    .highlight {
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <!-- Nested div structure -->
+  <div class="parent-div">
+    Parent Div
+    <div class="child-div">
+      Child Div
+      <button class="child-button">Click me</button>
+    </div>
+  </div>
+
+  <script>
+    /*
+      HTML nesting means placing elements inside other elements, creating a hierarchy.
+      The DOM tree represents this hierarchy visually as a tree structure.
+    */
+
+    // Select elements
+    const childDiv = document.querySelector('.child-div');
+    const childButton = document.querySelector('.child-button');
+    const parentDiv = document.querySelector('.parent-div');
+
+    // Using parentElement to log a child's parent
+    console.log('Parent of childDiv:', childDiv.parentElement);
+    /*
+      parentElement returns the parent node (element) of the current element in the DOM tree.
+    */
+
+    // Using .children to log all children of parentDiv
+    console.log('Children of parentDiv:', parentDiv.children);
+    /*
+      Difference between .childNodes and .children:
+      - .childNodes returns all child nodes including text nodes (spaces, line breaks).
+      - .children returns only element nodes, ignoring text nodes.
+    */
+
+    // Using .closest() to find a parent with a class
+    const closestParent = childButton.closest('.parent-div');
+    console.log('Closest parent with class "parent-div":', closestParent);
+    /*
+      .closest(selector) finds the nearest ancestor (including itself) that matches the selector.
+      It’s very useful for event delegation and finding related elements in the DOM.
+    */
+
+    // Toggle a class on parent when clicking a child button
+    childButton.addEventListener('click', () => {
+      parentDiv.classList.toggle('highlight');
+    });
+    /*
+      Event listeners listen for events like clicks.
+      When the button is clicked, the 'highlight' class is toggled on the parent div.
+      This changes the background color dynamically.
+    */
+  </script>
+</body>
+</html>

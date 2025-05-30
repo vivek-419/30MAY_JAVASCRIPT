@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html >
+<head>
+ 
+  <title>HTML5 Video API Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    video {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 10px;
+    }
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+    #currentTime {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>HTML5 Video API Demo</h2>
+
+  <!-- 1. Add a video element -->
+  <video id="myVideo" controls>
+    <source src="5121889_Person_People_3840x2160.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- 2. Buttons to control video playback -->
+  <div>
+    <button id="playBtn">Play</button>
+    <button id="pauseBtn">Pause</button>
+    <button id="muteToggleBtn">Mute</button>
+    <button id="jump10Btn">Jump to 10s</button>
+  </div>
+
+  <!-- 3. Display current playback time -->
+  <div id="currentTime">Current Time: 0:00</div>
+
+  <script>
+    // Select video and buttons
+    const video = document.getElementById('myVideo');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const muteToggleBtn = document.getElementById('muteToggleBtn');
+    const jump10Btn = document.getElementById('jump10Btn');
+    const currentTimeDisplay = document.getElementById('currentTime');
+
+    // Play button event - plays the video
+    playBtn.addEventListener('click', () => {
+      video.play();
+    });
+
+    // Pause button event - pauses the video
+    pauseBtn.addEventListener('click', () => {
+      video.pause();
+    });
+
+    /*
+      JavaScript controls video playback through methods like:
+      - video.play() to start playback
+      - video.pause() to pause playback
+      - video.muted to get/set mute state
+      - video.currentTime to get/set playback position
+    */
+
+    // Mute/unmute toggle button
+    muteToggleBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteToggleBtn.textContent = video.muted ? 'Unmute' : 'Mute';
+    });
+
+    /*
+      The 'muted' property is a boolean that controls whether the video's audio is muted.
+      Setting video.muted = true silences the audio.
+    */
+
+    // Update current time display when video time updates
+    video.ontimeupdate = () => {
+      const minutes = Math.floor(video.currentTime / 60);
+      const seconds = Math.floor(video.currentTime % 60).toString().padStart(2, '0');
+      currentTimeDisplay.textContent = `Current Time: ${minutes}:${seconds}`;
+    };
+
+    /*
+      The 'ontimeupdate' event fires repeatedly as the video plays,
+      letting us update the UI with the current playback time.
+    */
+
+    // Jump to 10 seconds button
+    jump10Btn.addEventListener('click', () => {
+      video.currentTime = 10;
+    });
+
+    /*
+      Changing the 'currentTime' property in JavaScript lets us seek to
+      any time (in seconds) in the video. Here, we jump to 10 seconds.
+    */
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html >
+<head>
+  
+  <title>Date & setInterval() Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+    #clock, #timer, #comparison {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Real-Time Clock & Timer with Date and setInterval()</h2>
+
+  <!-- Display current date/time -->
+  <div id="clock">Loading current time...</div>
+
+  <!-- Button to stop clock -->
+  <button id="stopClockBtn">Stop Clock</button>
+
+  <!-- Timer that counts up -->
+  <div id="timer">Timer: 0</div>
+
+  <!-- Display comparison result -->
+  <div id="comparison"></div>
+
+  <script>
+    /*
+      The Date object represents a single moment in time in JS.
+      It provides methods to get or set year, month, day, hours, minutes, seconds, etc.
+    */
+
+    // Function to format time with leading zeros
+    function formatTime(date) {
+      const h = date.getHours().toString().padStart(2, '0');
+      const m = date.getMinutes().toString().padStart(2, '0');
+      const s = date.getSeconds().toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    const clockEl = document.getElementById('clock');
+    const stopClockBtn = document.getElementById('stopClockBtn');
+    let clockInterval;
+
+    // Create real-time clock using setInterval
+    function startClock() {
+      clockInterval = setInterval(() => {
+        const now = new Date(); // get current date/time
+        clockEl.textContent = `Current Time: ${formatTime(now)}`;
+      }, 1000); // update every second
+    }
+
+    startClock();
+
+    /*
+      setInterval() runs a function repeatedly after every specified milliseconds.
+      It returns an interval ID that can be used to stop it later.
+    */
+
+    // Stop clock when button clicked
+    stopClockBtn.addEventListener('click', () => {
+      clearInterval(clockInterval);
+      clockEl.textContent += ' (Stopped)';
+    });
+
+    /*
+      clearInterval() stops a running interval using its ID.
+      This stops the repeated execution started by setInterval().
+    */
+
+    // Compare two Date objects and log which is earlier
+    const date1 = new Date('2025-05-30T10:00:00');
+    const date2 = new Date('2025-05-30T12:00:00');
+    const comparisonEl = document.getElementById('comparison');
+
+    if (date1 < date2) {
+      comparisonEl.textContent = `Date1 (${date1.toLocaleTimeString()}) is earlier than Date2 (${date2.toLocaleTimeString()})`;
+    } else if (date1 > date2) {
+      comparisonEl.textContent = `Date2 (${date2.toLocaleTimeString()}) is earlier than Date1 (${date1.toLocaleTimeString()})`;
+    } else {
+      comparisonEl.textContent = 'Both dates are equal';
+    }
+
+    /*
+      Comparing dates in JS uses comparison operators (<, >, ===) which compare
+      the underlying timestamps (milliseconds since Jan 1, 1970).
+    */
+
+    // Timer that counts up every second and stops at 10
+    const timerEl = document.getElementById('timer');
+    let count = 0;
+    const maxCount = 10;
+
+    const timerInterval = setInterval(() => {
+      count++;
+      timerEl.textContent = `Timer: ${count}`;
+      if (count >= maxCount) {
+        clearInterval(timerInterval);
+        timerEl.textContent += ' (Stopped)';
+      }
+    }, 1000);
+
+    /*
+      Timers like setInterval combined with conditions allow us to
+      run code repeatedly but stop it when a condition is met (like count reaching 10).
+    */
+  </script>
+
+</body>
+</html>
